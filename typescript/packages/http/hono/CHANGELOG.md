@@ -1,4 +1,4 @@
-# @x402/hono Changelog
+# @kmasuda1986/x402-hono Changelog
 
 ## 2.0.0
 - Implements x402 2.0.0 for the TypeScript SDK.

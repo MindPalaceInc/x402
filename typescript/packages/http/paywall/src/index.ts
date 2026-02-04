@@ -11,6 +11,7 @@ export type {
   PaywallNetworkHandler,
   PaymentRequirements,
 } from "./types";
+export type { Network } from "@x402/core/types";
 
 // Re-export network handlers for convenience
 export { evmPaywall } from "./evm";

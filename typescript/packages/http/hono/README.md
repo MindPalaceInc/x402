@@ -1,11 +1,11 @@
-# @x402/hono
+# @kmasuda1986/x402-hono
 
 Hono middleware integration for the x402 Payment Protocol. This package provides a simple middleware function for adding x402 payment requirements to your Hono applications.
 
 ## Installation
 
 ```bash
-pnpm install @x402/hono
+pnpm install @kmasuda1986/x402-hono
 ```
 
 ## Quick Start
@@ -13,7 +13,7 @@ pnpm install @x402/hono
 ```typescript
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
-import { paymentMiddleware, x402ResourceServer } from "@x402/hono";
+import { paymentMiddleware, x402ResourceServer } from "@kmasuda1986/x402-hono";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 
@@ -237,7 +237,7 @@ If you need to use a custom facilitator server, configure it when creating the x
 
 ```typescript
 import { HTTPFacilitatorClient } from "@x402/core/server";
-import { x402ResourceServer } from "@x402/hono";
+import { x402ResourceServer } from "@kmasuda1986/x402-hono";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
 
 const customFacilitator = new HTTPFacilitatorClient({

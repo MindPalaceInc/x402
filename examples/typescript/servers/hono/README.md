@@ -1,10 +1,10 @@
-# @x402/hono Example Server
+# @kmasuda1986/x402-hono Example Server
 
-Hono server demonstrating how to protect API endpoints with a paywall using the `@x402/hono` middleware.
+Hono server demonstrating how to protect API endpoints with a paywall using the `@kmasuda1986/x402-hono` middleware.
 
 ```typescript
 import { Hono } from "hono";
-import { paymentMiddleware, x402ResourceServer } from "@x402/hono";
+import { paymentMiddleware, x402ResourceServer } from "@kmasuda1986/x402-hono";
 import { ExactEvmScheme } from "@x402/evm/exact/server";
 import { HTTPFacilitatorClient } from "@x402/core/server";
 

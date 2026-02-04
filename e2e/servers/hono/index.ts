@@ -1,6 +1,6 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { paymentMiddleware } from "@x402/hono";
+import { paymentMiddleware } from "@kmasuda1986/x402-hono";
 import { x402ResourceServer, HTTPFacilitatorClient } from "@x402/core/server";
 import { registerExactEvmScheme } from "@x402/evm/exact/server";
 import { registerExactSvmScheme } from "@x402/svm/exact/server";
