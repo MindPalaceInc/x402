@@ -8,7 +8,15 @@ import * as allChains from "viem/chains";
 export const EVM_CHAIN_IDS = {
   BASE_MAINNET: "8453",
   BASE_SEPOLIA: "84532",
+  KAIA_MAINNET: "8217",
+  KAIA_KAIROS_TESTNET: "1001",
 } as const;
+
+// Display names for EVM chains not in viem/chains
+const EVM_DISPLAY_NAMES: Record<string, string> = {
+  [EVM_CHAIN_IDS.KAIA_MAINNET]: "Kaia",
+  [EVM_CHAIN_IDS.KAIA_KAIROS_TESTNET]: "Kaia Kairos Testnet",
+};
 
 // Solana Network References (CAIP-2 format: solana:genesisHash)
 export const SOLANA_NETWORK_REFS = {
@@ -39,9 +47,17 @@ export function normalizePaymentRequirements(
  */
 export function getPreferredNetworks(testnet: boolean): string[] {
   if (testnet) {
-    return [`eip155:${EVM_CHAIN_IDS.BASE_SEPOLIA}`, `solana:${SOLANA_NETWORK_REFS.DEVNET}`];
+    return [
+      `eip155:${EVM_CHAIN_IDS.BASE_SEPOLIA}`,
+      `eip155:${EVM_CHAIN_IDS.KAIA_KAIROS_TESTNET}`,
+      `solana:${SOLANA_NETWORK_REFS.DEVNET}`,
+    ];
   }
-  return [`eip155:${EVM_CHAIN_IDS.BASE_MAINNET}`, `solana:${SOLANA_NETWORK_REFS.MAINNET}`];
+  return [
+    `eip155:${EVM_CHAIN_IDS.BASE_MAINNET}`,
+    `eip155:${EVM_CHAIN_IDS.KAIA_MAINNET}`,
+    `solana:${SOLANA_NETWORK_REFS.MAINNET}`,
+  ];
 }
 
 /**
@@ -109,6 +125,11 @@ export function getNetworkDisplayName(network: string): string {
       return chain.name;
     }
 
+    const displayName = EVM_DISPLAY_NAMES[network.split(":")[1]];
+    if (displayName) {
+      return displayName;
+    }
+
     return `Chain ${chainId}`;
   }
 
@@ -127,11 +148,17 @@ export function getNetworkDisplayName(network: string): string {
  * @param network - The network to evaluate (CAIP-2 format).
  * @returns True if the network is a recognized testnet.
  */
+const EVM_TESTNET_CHAIN_IDS = new Set([
+  EVM_CHAIN_IDS.BASE_SEPOLIA,
+  EVM_CHAIN_IDS.KAIA_KAIROS_TESTNET,
+]);
+
 export function isTestnetNetwork(network: string): boolean {
   if (network.startsWith("eip155:")) {
-    const chainId = parseInt(network.split(":")[1]);
+    const chainIdStr = network.split(":")[1];
+    const chainId = parseInt(chainIdStr);
     const chain = Object.values(allChains).find(c => c.id === chainId);
-    return chain?.testnet ?? false;
+    return chain?.testnet ?? EVM_TESTNET_CHAIN_IDS.has(chainIdStr);
   }
 
   if (network.startsWith("solana:")) {
