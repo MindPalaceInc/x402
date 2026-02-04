@@ -284,6 +284,11 @@ export class x402HTTPResourceServer {
    * @param routes - Route configuration for payment-protected endpoints
    */
   constructor(ResourceServer: x402ResourceServer, routes: RoutesConfig) {
+    if (routes == null) {
+      throw new Error(
+        "x402HTTPResourceServer: routes argument is required and must not be undefined or null.",
+      );
+    }
     this.ResourceServer = ResourceServer;
     this.routesConfig = routes;
 

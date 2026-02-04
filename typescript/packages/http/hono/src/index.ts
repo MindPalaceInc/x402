@@ -86,7 +86,8 @@ export function paymentMiddlewareFromHTTPServer(
   // Dynamically register bazaar extension if routes declare it and not already registered
   // Skip if pre-registered (e.g., in serverless environments where static imports are used)
   let bazaarPromise: Promise<void> | null = null;
-  if (checkIfBazaarNeeded(httpServer.routes) && !httpServer.server.hasExtension("bazaar")) {
+  const routesConfig = httpServer.routes;
+  if (routesConfig != null && checkIfBazaarNeeded(routesConfig) && !httpServer.server.hasExtension("bazaar")) {
     bazaarPromise = import("@x402/extensions/bazaar")
       .then(({ bazaarResourceServerExtension }) => {
         httpServer.server.registerExtension(bazaarResourceServerExtension);
